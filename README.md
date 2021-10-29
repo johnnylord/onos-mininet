@@ -6,6 +6,29 @@ The following scripts will run up two machines. One is for mininet simulation, t
 vagrant up --provider virtualbox
 ```
 
+## ONOS Controller System Configuration
+These steps should only be done when you first run up the system
+```bash
+$ vagrant ssh onos
+# ==================== You are in the VM =======================
+# Package Installation
+$ sudo adduser sdn --system --group
+$ sudo gpasswd -a vagrant sdn
+$ sudo apt-get update
+$ sudo apt-get install openjdk-8-jdk curl
+
+# Download & Run the controller
+$ wget -c https://repo1.maven.org/maven2/org/onosproject/onos-releases/1.15.0/onos-1.15.0.tar.gz
+$ tar xvf onos-1.15.0.tar.gz
+$ cd onos-1.15.0/bin/
+$ ./onos-service start
+
+# ==================== You are in the ONOS shell =======================
+# Enable the plugins
+$ app activate org.onosproject.openflow
+$ app activate org.onosproject.fwd
+```
+
 ## How to Run
 1. Run the ONOS Controller (192.168.50.254)
 ```bash
